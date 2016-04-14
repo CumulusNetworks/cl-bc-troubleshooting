@@ -1,5 +1,5 @@
 ---        
-- hosts: internet
+- hosts: edge
   user: cumulus
   become: yes
   roles:
