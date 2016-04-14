@@ -26,7 +26,7 @@
   delegate_to: 127.0.0.1
 
 - name: grab quagga from mgmt server
-  get_url: url=http://10.2.0.254/quagga_2.5.6.deb dest=/root/quagga_2.5.6.deb validate_certs=False
+  get_url: url=http://oob-mgmt-server.lab.local/quagga_2.5.6.deb dest=/root/quagga_2.5.6.deb validate_certs=False
 
 - name: Install Quagga
   apt: deb=/root/quagga_2.5.6.deb
@@ -39,7 +39,7 @@
     - remove_default
       
 - name: delete default if everything else worked and we are running vagrant
-  command: ip route del default via 10.2.0.254
-  when: default_installed is defined and "default via 10.2.0.254 dev eth0" in default_installed.stdout  
+  command: ip route del default via 192.168.0.254
+  when: default_installed is defined and "default via 192.168.0.254 dev eth0" in default_installed.stdout  
   tags:
     - remove_default
