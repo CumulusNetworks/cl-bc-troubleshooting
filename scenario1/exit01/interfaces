@@ -28,5 +28,11 @@ iface bridge
   
 auto bridge.1
 iface bridge.1
+  
+auto swp44
+iface swp44
+  bridge-access 2
+  
+
 
 

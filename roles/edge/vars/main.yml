@@ -1,0 +1,38 @@
+interfaces:
+  sec0:
+    loopbacks:
+      ipv6: "fd::110/128"
+      ipv4: "10.2.1.110/32"
+
+bgp:
+  sec0:
+    myasn: "65100"
+    networks: ["10.2.1.110/32"]
+    lb_peers:
+      description: "Southbound links to lb0 and lb1"
+      interfaces: ["eth3"]
+      prefix_list_out: "allow_default_and_loopback"
+      prefix_list_in: "allow_rack_subnets"
+    edge_peers:
+      description: "Northbound links to bgp0 and bgp1"
+      interfaces: ["eth1"]
+      prefix_list_out: "allow_rack_subnets"
+      prefix_list_in: "allow_default"
+      
+prefix_lists:
+  sec0:
+    allow_default: 
+      - "10 permit 0.0.0.0/0"
+      - "100 deny any"  
+    allow_default_and_loopback: 
+      - "10 permit 0.0.0.0/0"
+      - "20 permit 10.2.1.110/32"
+      - "100 deny any"
+    allow_rack_subnets: 
+      - "10 permit 10.2.1.0/24 le 32"
+      - "11 permit 10.2.50.0/24 le 32"
+      - "12 permit 10.2.51.0/24 le 32"
+      - "13 permit 10.2.57.0/24 le 32"      
+      - "20 permit 185.114.212.0/22 le 32"
+      - "100 deny any"
+ 

@@ -1,0 +1,35 @@
+{% set node = interfaces[ansible_hostname] %}
+
+#Configured by Ansible
+auto vagrant
+iface vagrant inet dhcp
+
+auto eth0
+iface eth0 inet dhcp
+
+##########################
+#Loopback IP Addresses
+##########################
+auto lo
+iface lo inet loopback
+    pre-up ip addr flush dev lo
+{% if node.loopbacks.ipv4 is defined %}
+auto lo:0
+iface lo:0 inet static
+    address {{node.loopbacks.ipv4}}
+{% endif %}
+{% if node.loopbacks.ipv6 is defined %}
+auto lo:1
+iface lo:1 inet6 static
+    address {{node.loopbacks.ipv6}}
+{% endif %}
+
+auto eth1
+iface eth1 inet manual
+  up ip link set $IFACE up
+  down ip link set $IFACE down
+
+auto eth3
+iface eth3 inet manual
+  up ip link set $IFACE up
+  down ip link set $IFACE down

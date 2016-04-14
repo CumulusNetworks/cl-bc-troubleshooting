@@ -1,0 +1,7 @@
+---        
+- hosts: internet
+  user: cumulus
+  become: yes
+  roles:
+    - edge
+

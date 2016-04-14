@@ -1,0 +1,45 @@
+- name: Set APT to always use IPv4
+  shell: "echo 'Acquire::ForceIPv4 \"true\";' > /etc/apt/apt.conf.d/99force-ipv4"
+  tags:
+    - install
+    - apt
+    
+- name: Enable Routing on the FWs
+  sysctl: name="net.ipv4.ip_forward" value=1 sysctl_set=yes state=present reload=yes
+  tags:
+    - quagga
+    
+- name: Check if iproute is installed
+  shell: "dpkg-query -f '${binary:Package}\n' -W"
+  register: iproute_installed
+  notify: Install iproute for Quagga dependency
+  
+- name: Install iproute for Quagga dependency
+  apt: name=iproute update_cache=yes state=present cache_valid_time=86400
+  when: "'iproute' not in iproute_installed"
+  tags:
+    - quagga
+    - install
+    
+- name: download official quagga deb
+  get_url: url=https://github.com/CumulusNetworks/quagga/blob/cm_2.5/debian/release/quagga_0.99.23.1-1+cl2.5_amd64.deb?raw=true dest=/var/www/quagga_2.5.6.deb validate_certs=False
+  delegate_to: 127.0.0.1
+
+- name: grab quagga from mgmt server
+  get_url: url=http://10.2.0.254/quagga_2.5.6.deb dest=/root/quagga_2.5.6.deb validate_certs=False
+
+- name: Install Quagga
+  apt: deb=/root/quagga_2.5.6.deb
+
+- name: Check if default for eth0 is installed
+  shell: "ip route show"
+  register: default_installed
+  notify: delete default if everything else worked and we are running vagrant
+  tags:
+    - remove_default
+      
+- name: delete default if everything else worked and we are running vagrant
+  command: ip route del default via 10.2.0.254
+  when: default_installed is defined and "default via 10.2.0.254 dev eth0" in default_installed.stdout  
+  tags:
+    - remove_default
