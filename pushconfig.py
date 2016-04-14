@@ -18,11 +18,9 @@ def go(host, demo):
     for line in ['sudo wget %s/%s/interfaces'%(url, host),
                  'sudo wget %s/%s/Quagga.conf'%(url, host),
                  'sudo wget %s/%s/daemons'%(url, host),
-                 'sudo wget %s/id_rsa.pub'%(url, host),
                  'sudo mv interfaces /etc/network/interfaces',
                  'sudo mv Quagga.conf /etc/quagga/Quagga.conf',
                  'sudo mv daemons /etc/quagga/daemons',
-                 'sudo cat id_rsa.pub >> /home/cumulus/authorized_keys',
                  'sudo reboot']:
         stdin, stdout, stderr = expect.exec_command(line, get_pty=True)
         stdout.channel.recv_exit_status()
