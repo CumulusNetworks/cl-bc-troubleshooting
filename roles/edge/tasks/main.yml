@@ -3,7 +3,26 @@
   tags:
     - install
     - apt
-    
+ 
+- name: install ifenslave package
+  apt: name={{ item }} update_cache=yes
+  with_items:
+    - vlan
+
+- name: Add bonding and 8021q module to running kernel config
+  command: "{{ item }}"
+  with_items:
+    - modprobe 8021q
+  tags:
+    - interfaces
+
+- name: Add bonding and 8021q module to persistent kernel startup
+  lineinfile: dest=/etc/modules line={{ item }}
+  with_items:
+    - 8021q
+  tags:
+    - interfaces
+       
 - name: Enable Routing on the FWs
   sysctl: name="net.ipv4.ip_forward" value=1 sysctl_set=yes state=present reload=yes
   tags:
