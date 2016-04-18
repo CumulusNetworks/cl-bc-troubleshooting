@@ -3,11 +3,18 @@
   tags:
     - install
     - apt
- 
+
+- name: Check if iproute is installed
+  shell: "dpkg-query -f '${binary:Package}\n' -W"
+  register: vlan_installed
+  notify: Install iproute for Quagga dependency
+  
 - name: install vlan package
   apt: name={{ item }} update_cache=yes
   with_items:
     - vlan
+  when: "'vlan' not in vlan_installed"
+
 
 - name: Add 8021q module to running kernel config
   command: "{{ item }}"
