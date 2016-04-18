@@ -10,7 +10,7 @@
   debug: msg="{{vlan_installed}}"
   
 - name: install vlan package when not installed
-  apt: name={{ item }} update_cache=yes
+  apt: name={{ item }} update_cache=yes state=present cache_valid_time=86400
   with_items:
     - vlan
   when: "'vlan' not in vlan_installed"
