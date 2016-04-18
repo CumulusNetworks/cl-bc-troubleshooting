@@ -1,7 +1,30 @@
 ---        
-- hosts: edge
+#- hosts: edge
+#  user: cumulus
+#  become: yes
+#  roles:
+#    - edge
+
+- hosts: leaf
   user: cumulus
   become: yes
   roles:
-    - edge
+    - common
 
+- hosts: spine
+  user: cumulus
+  become: yes
+  roles: 
+    - common
+
+- hosts: exit
+  user: cumulus
+  become: yes
+  roles: 
+    - common
+
+- hosts: servers
+  user: cumulus
+  become: yes
+  roles: 
+    - common
