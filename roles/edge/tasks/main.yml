@@ -7,7 +7,7 @@
 - name: Check if vlan is installed
   shell: "dpkg-query -f '${binary:Package}\n' -W"
   register: vlan_installed
-  notify: Install iproute for Quagga dependency
+  notify: install vlan package when not installed
   
 - name: install vlan package when not installed
   apt: name={{ item }} update_cache=yes
