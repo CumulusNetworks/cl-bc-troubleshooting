@@ -1,13 +1,13 @@
 - name: Set APT to always use IPv4
   shell: "echo 'Acquire::ForceIPv4 \"true\";' > /etc/apt/apt.conf.d/99force-ipv4"
-  tags:
-    - install
-    - apt
 
 - name: Check if vlan is installed
   shell: "dpkg-query -f '${binary:Package}\n' -W"
   register: vlan_installed
   notify: install vlan package when not installed
+
+- name: print output for vlan check
+  debug: msg="{{vlan_installed}}"
   
 - name: install vlan package when not installed
   apt: name={{ item }} update_cache=yes
@@ -20,15 +20,12 @@
   command: "{{ item }}"
   with_items:
     - modprobe 8021q
-  tags:
-    - interfaces
+
 
 - name: Add 8021q module to persistent kernel startup
   lineinfile: dest=/etc/modules line={{ item }}
   with_items:
     - 8021q
-  tags:
-    - interfaces
        
 - name: Enable Routing on the FWs
   sysctl: name="net.ipv4.ip_forward" value=1 sysctl_set=yes state=present reload=yes
@@ -43,10 +40,7 @@
 - name: Install iproute for Quagga dependency
   apt: name=iproute update_cache=yes state=present cache_valid_time=86400
   when: "'iproute' not in iproute_installed"
-  tags:
-    - quagga
-    - install
-    
+ 
 - name: download official quagga deb
   get_url: url=https://github.com/CumulusNetworks/quagga/blob/cm_2.5/debian/release/quagga_0.99.23.1-1+cl2.5_amd64.deb?raw=true dest=/var/www/quagga_2.5.6.deb validate_certs=False
   delegate_to: 127.0.0.1
