@@ -3,9 +3,11 @@
   
 - name: copy Quagga daemons
   copy: src=scenario{{s}}/{{ansible_hostname}}/daemons dest=/etc/quagga/
+  when: "Cumulus" in ansible_lsb
   
 - name: copy Quagga conf
   copy: src=scenario{{s}}/{{ansible_hostname}}/Quagga.conf dest=/etc/quagga/
+  when: "Cumulus" in ansible_lsb
 
 - name: reload networking
   command: ifreload -a
