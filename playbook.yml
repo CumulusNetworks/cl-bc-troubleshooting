@@ -5,6 +5,12 @@
   roles:
     - edge
 
+- hosts: internet
+  user: cumulus
+  become: yes
+  roles:
+    - common
+    
 - hosts: leaf
   user: cumulus
   become: yes
