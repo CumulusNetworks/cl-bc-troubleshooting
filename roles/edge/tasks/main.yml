@@ -4,19 +4,19 @@
     - install
     - apt
  
-- name: install ifenslave package
+- name: install vlan package
   apt: name={{ item }} update_cache=yes
   with_items:
     - vlan
 
-- name: Add bonding and 8021q module to running kernel config
+- name: Add 8021q module to running kernel config
   command: "{{ item }}"
   with_items:
     - modprobe 8021q
   tags:
     - interfaces
 
-- name: Add bonding and 8021q module to persistent kernel startup
+- name: Add 8021q module to persistent kernel startup
   lineinfile: dest=/etc/modules line={{ item }}
   with_items:
     - 8021q
