@@ -1,11 +1,11 @@
 - name: copy interfaces
-  copy: src=scenario{{scenario}}/{{ansible_hostname}}/interfaces dest=/etc/network/
+  copy: src=scenario{{s}}/{{ansible_hostname}}/interfaces dest=/etc/network/
   
 - name: copy Quagga daemons
-  copy: src=scenario{{scenario}}/{{ansible_hostname}}/daemons dest=/etc/quagga/
+  copy: src=scenario{{s}}/{{ansible_hostname}}/daemons dest=/etc/quagga/
   
 - name: copy Quagga conf
-  copy: src=scenario{{scenario}}/{{ansible_hostname}}/Quagga.conf dest=/etc/quagga/
+  copy: src=scenario{{s}}/{{ansible_hostname}}/Quagga.conf dest=/etc/quagga/
 
 - name: reload networking
   command: ifreload -a
