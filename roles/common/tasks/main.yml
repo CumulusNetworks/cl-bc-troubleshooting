@@ -11,5 +11,27 @@
 
 - name: reload networking
   command: ifreload -a
+  when: '"Cumulus" in ansible_lsb'
+
 - name: reload quagga
   service: name=quagga state=restarted
+  when: '"Cumulus" in ansible_lsb'
+
+- name: Force Interfaces Down
+  command: ifup {{item}}
+  with_items:
+    - lo
+    - lo:1
+    - eth1
+    - eth2
+  when: '"Cumulus" not in ansible_lsb'
+    
+- name: Force Interfaces Up
+  command: ifup {{item}}
+  with_items:
+    - lo
+    - lo:1
+    - eth1
+    - eth2
+  when: '"Cumulus" not in ansible_lsb'
+    
