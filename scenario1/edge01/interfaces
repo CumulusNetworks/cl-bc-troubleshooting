@@ -1,0 +1,23 @@
+
+auto lo
+iface lo inet loopback
+    address 10.0.0.51/32
+
+auto eth0
+iface eth0 inet dhcp
+
+auto vagrant
+iface vagrant inet dhcp
+
+# uplinks
+auto eth1
+iface eth1 inet6 manual
+
+auto eth2
+iface eth2 inet6 manual
+
+
+
+
+
+

@@ -1,9 +1,9 @@
 ---        
-#- hosts: edge
-#  user: cumulus
-#  become: yes
-#  roles:
-#    - edge
+- hosts: edge
+  user: cumulus
+  become: yes
+  roles:
+    - edge
 
 - hosts: leaf
   user: cumulus

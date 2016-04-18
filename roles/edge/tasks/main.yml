@@ -31,6 +31,44 @@
 - name: Install Quagga
   apt: deb=/root/quagga_2.5.6.deb
 
+- name: print ansible_lsb.id result
+  debug: var=ansible_lsb.id
+  
+- name: copy interfaces
+  copy: src=scenario{{s}}/{{ansible_hostname}}/interfaces dest=/etc/network/
+  
+- name: copy Quagga daemons
+  copy: src=scenario{{s}}/{{ansible_hostname}}/daemons dest=/etc/quagga/
+  when: '"Cumulus" in ansible_lsb.id'
+  
+- name: copy Quagga conf
+  copy: src=scenario{{s}}/{{ansible_hostname}}/Quagga.conf dest=/etc/quagga/
+  when: '"Cumulus" in ansible_lsb.id'
+
+- name: reload networking
+  command: ifreload -a
+  when: '"Cumulus" in ansible_lsb.id'
+
+- name: reload quagga
+  service: name=quagga state=restarted
+  when: '"Cumulus" in ansible_lsb.id'
+
+- name: Force Interfaces Down
+  command: ifdown {{item}}
+  with_items:
+    - lo
+    - eth1
+    - eth2
+  when: '"Cumulus" not in ansible_lsb.id'
+    
+- name: Force Interfaces Up
+  command: ifup {{item}}
+  with_items:
+    - lo
+    - eth1
+    - eth2
+  when: '"Cumulus" not in ansible_lsb.id'
+  
 - name: Check if default for eth0 is installed
   shell: "ip route show"
   register: default_installed
