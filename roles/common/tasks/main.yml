@@ -75,7 +75,7 @@
   notify: Add Default route if on server03
   when: "'server03' in ansible_hostname"
 
-- debug: default_installed     
+- debug: msg="{{default_installed}}"    
      
 - name: Add Default route if on server03
   lineinfile: dest=/etc/rc.local line="ip route add default nexthop via 172.16.3.1 dev eth1 onlink nexthop via 172.16.3.1 dev eth2 onlink" insertbefore="exit 0"
