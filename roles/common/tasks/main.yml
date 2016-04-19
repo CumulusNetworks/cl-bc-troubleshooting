@@ -82,3 +82,11 @@
 - name: make sure default is present on server01
   command: "/sbin/ip route add default nexthop via 172.16.3.1 dev eth1 onlink nexthop via 172.16.3.1 dev eth2 onlink"
   when: "'server03' in ansible_hostname and 'nexthop via 172.16.3.1' not in default_installed"
+
+- name: Enable NAT on Vagrant interface for Downstream Hosts
+  shell: "{{ item }}"
+  with_items:
+    - "iptables --flush -t nat"
+    - "iptables -t nat -A POSTROUTING -o vagrant -j MASQUERADE"
+  when: "'internet' in ansible_hostname"
+  
