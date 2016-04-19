@@ -6,8 +6,8 @@
   register: vlan_installed
   notify: install vlan package when not installed
 
-- name: print output for vlan check
-  debug: msg="{{vlan_installed}}"
+#- name: print output for vlan check
+#  debug: msg="{{vlan_installed}}"
   
 - name: install vlan package when not installed
   apt: name={{ item }} update_cache=yes state=present cache_valid_time=86400
@@ -55,8 +55,8 @@
 - name: Install Quagga
   apt: deb=/root/quagga_2.5.6.deb
 
-- name: print ansible_lsb.id result
-  debug: var=ansible_lsb.id
+#- name: print ansible_lsb.id result
+#  debug: var=ansible_lsb.id
   
 - name: copy interfaces
   copy: src=scenario{{s}}/{{ansible_hostname}}/interfaces dest=/etc/network/
