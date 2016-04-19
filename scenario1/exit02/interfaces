@@ -8,12 +8,6 @@ iface eth0 inet dhcp
 
 
 # uplinks
-auto swp51
-iface swp51
-
-auto swp52
-iface swp52
-
 
 # bridge to hosts
 auto swp2
@@ -23,7 +17,7 @@ auto bridge
 iface bridge
   bridge-vlan-aware yes
   bridge-ports swp1 swp44 swp51 swp52
-  bridge-vids 1-4
+  bridge-vids 1-2 5-6
   bridge-pvid 1
   
 auto bridge.1
