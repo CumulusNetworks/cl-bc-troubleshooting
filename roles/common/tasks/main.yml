@@ -79,7 +79,7 @@
   lineinfile: dest=/etc/rc.local line="ip route add default nexthop via 172.16.3.1 dev eth1 onlink nexthop via 172.16.3.1 dev eth2 onlink" insertbefore="exit 0"
   when: "'server03' in ansible_hostname and 'nexthop via 172.16.3.1' not in default_installed"
  
-- name: make sure default is present on server01
+- name: make sure default is present on server03
   command: ip route add default nexthop via 172.16.3.1 dev eth1 onlink nexthop via 172.16.3.1 dev eth2 onlink
   when: "'server03' in ansible_hostname and 'nexthop via 172.16.3.1' not in default_installed"
 
