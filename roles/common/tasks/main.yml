@@ -55,4 +55,4 @@
 
 - name: Setup Mgmtvrf
   command: cl-mgmtvrf -e
-  when: 'mgmtvrf.stat.exists == False and "Cumulus" in ansible_lsb.id' 
+  when: '"Cumulus" in ansible_lsb.id and mgmtvrf.stat.exists == False' 
