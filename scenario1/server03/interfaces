@@ -4,8 +4,6 @@ iface lo inet loopback
 auto lo
 iface lo inet static
   address 172.16.3.101/32
-  up ip route add 172.16.0.0/16 nexthop via 172.16.3.1 dev eth1 onlink nexthop via 172.16.3.1 dev eth2 onlink
-  up ip route add 10.0.0.0/8 nexthop via 172.16.3.1 dev eth1 onlink nexthop via 172.16.3.1 dev eth2 onlink
 
 auto eth0
 iface eth0 inet dhcp
