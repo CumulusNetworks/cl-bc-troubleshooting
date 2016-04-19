@@ -1,8 +1,8 @@
 auto lo
 iface lo inet loopback
 
-auto lo:1
-iface lo:1 inet static
+auto lo
+iface lo inet static
   address 172.16.1.101/32
   up ip route add 172.16.0.0/16 nexthop via 172.16.1.1 dev eth1 onlink nexthop via 172.16.1.1 dev eth2 onlink
   up ip route add 10.0.0.0/8 nexthop via 172.16.1.1 dev eth1 onlink nexthop via 172.16.1.1 dev eth2 onlink
