@@ -78,6 +78,14 @@
     - eth2
     - eth1.2
     - eth2.2
+    - eth1.3
+    - eth2.3
+    - eth1.4
+    - eth2.4
+    - eth1.5
+    - eth2.5
+    - eth1.6
+    - eth2.6
     
 - name: Force Interfaces Up
   command: ifup {{item}}
@@ -87,6 +95,14 @@
     - eth2
     - eth1.2
     - eth2.2
+    - eth1.3
+    - eth2.3
+    - eth1.4
+    - eth2.4
+    - eth1.5
+    - eth2.5
+    - eth1.6
+    - eth2.6
       
 - name: Check if default for eth0 is installed
   shell: "ip route show"
