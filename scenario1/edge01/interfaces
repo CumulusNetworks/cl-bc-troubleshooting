@@ -9,12 +9,6 @@ auto vagrant
 iface vagrant inet dhcp
 
 # uplinks
-auto eth1
-iface eth1 inet6 manual
-
-auto eth2
-iface eth2 inet6 manual
-
 auto eth1.2
 iface eth1.2 inet6 manual
 
@@ -27,10 +21,9 @@ iface eth1.3 inet6 manual
 auto eth1.4
 iface eth1.4 inet6 manual
 
-auto eth1.5
-iface eth1.5 inet6 manual
+auto eth2.5
+iface eth2.5 inet6 manual
 
-auto eth1.6
-iface eth1.6 inet6 manual
-
+auto eth2.6
+iface eth2.6 inet6 manual
 
