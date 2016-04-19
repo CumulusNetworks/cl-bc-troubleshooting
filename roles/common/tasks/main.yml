@@ -63,11 +63,11 @@
      
 - name: Add Default route if on server01
   lineinfile: dest=/etc/rc.local line="ip route add default nexthop via 172.16.1.1 dev eth1 onlink nexthop via 172.16.1.1 dev eth2 onlink" insertbefore="exit 0"
-  when: "'server01' in ansible_hostname and 'nexthop via 172.16.1.1' not in default_installed"
+  when: "'server01' in ansible_hostname and 'nexthop via 172.16.1.1' not in default_installed.stdout"
  
 - name: make sure default is present on server01
   command: ip route add default nexthop via 172.16.1.1 dev eth1 onlink nexthop via 172.16.1.1 dev eth2 onlink
-  when: "'server01' in ansible_hostname and 'nexthop via 172.16.1.1' not in default_installed"
+  when: "'server01' in ansible_hostname and 'nexthop via 172.16.1.1' not in default_installed.stdout"
 
 - name: Check if default for eth1/eth2 is installed
   shell: "ip route show"
@@ -75,7 +75,7 @@
   notify: Add Default route if on server03
   when: "'server03' in ansible_hostname"
 
-- debug: msg="{{default_installed.stdout}}"    
+#- debug: msg="{{default_installed.stdout}}"    
      
 - name: Add Default route if on server03
   lineinfile: dest=/etc/rc.local line="ip route add default nexthop via 172.16.3.1 dev eth1 onlink nexthop via 172.16.3.1 dev eth2 onlink" insertbefore="exit 0"
