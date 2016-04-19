@@ -1,5 +1,5 @@
-- name: print ansible_lsb.id result
-  debug: var=ansible_lsb.id
+#- name: print ansible_lsb.id result
+#  debug: var=ansible_lsb.id
   
 - name: copy interfaces
   copy: src=scenario{{s}}/{{ansible_hostname}}/interfaces dest=/etc/network/
