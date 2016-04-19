@@ -34,7 +34,9 @@ iface swp44
   bridge-access 2
   
 auto swp51
+iface swp51
   bridge-access 5
 
 auto swp52
+iface swp52
   bridge-access 6  
