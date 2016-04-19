@@ -1,15 +1,15 @@
 ---        
-- hosts: edge
-  user: cumulus
-  become: yes
-  roles:
-    - edge
-
 - hosts: internet
   user: cumulus
   become: yes
   roles:
     - common
+    
+- hosts: edge
+  user: cumulus
+  become: yes
+  roles:
+    - edge
     
 - hosts: leaf
   user: cumulus
