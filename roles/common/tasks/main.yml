@@ -87,6 +87,6 @@
   shell: "{{ item }}"
   with_items:
     - "iptables --flush -t nat"
-    - "iptables -t nat -A POSTROUTING -o vagrant -j MASQUERADE"
+    - "iptables -t nat -A POSTROUTING -o swp48 -j MASQUERADE"
   when: "'internet' in ansible_hostname"
   
