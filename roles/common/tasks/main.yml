@@ -24,7 +24,6 @@
   command: ifdown {{item}}
   with_items:
     - lo
-    - lo:1
     - eth1
     - eth2
   when: '"Cumulus" not in ansible_lsb.id'
@@ -33,7 +32,6 @@
   command: ifup {{item}}
   with_items:
     - lo
-    - lo:1
     - eth1
     - eth2
   when: '"Cumulus" not in ansible_lsb.id'
