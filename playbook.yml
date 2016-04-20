@@ -1,4 +1,10 @@
 ---        
+- hosts: localhost
+  user: cumulus
+  become: yes
+  roles:
+    - localhost
+
 - hosts: internet
   user: cumulus
   become: yes
