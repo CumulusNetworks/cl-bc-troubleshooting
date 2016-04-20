@@ -21,7 +21,6 @@
   with_items:
     - modprobe 8021q
 
-
 - name: Add 8021q module to persistent kernel startup
   lineinfile: dest=/etc/modules line={{ item }}
   with_items:
@@ -31,7 +30,7 @@
   sysctl: name="net.ipv6.conf.all.forwarding" value=1 sysctl_set=yes state=present reload=yes
   ignore_errors: yes 
        
-- name: Enable Routing on the FWs
+- name: Enable Routing for IPv4
   sysctl: name="net.ipv4.ip_forward" value=1 sysctl_set=yes state=present reload=yes
   tags:
     - quagga
