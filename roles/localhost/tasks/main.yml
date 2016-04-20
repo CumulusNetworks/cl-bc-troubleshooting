@@ -17,7 +17,7 @@
   delegate_to: localhost
 
 - name: restart the apt-cacher-ng
-  command: service apt-cacher restart
+  service: name=apt-cacher-ng state=restarted pattern=/var/run/apt-cacher-ng/pid
   delegate_to: localhost
 
 - name: Verify apt-cacher is running
