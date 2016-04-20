@@ -22,3 +22,8 @@ edge01
 
 [internet]
 internet
+
+[network]
+leaf
+spine
+servers

@@ -17,26 +17,8 @@
   roles:
     - edge
     
-- hosts: leaf
+- hosts: network
   user: cumulus
   become: yes
   roles:
-    - common
-
-- hosts: spine
-  user: cumulus
-  become: yes
-  roles: 
-    - common
-
-- hosts: exit
-  user: cumulus
-  become: yes
-  roles: 
-    - common
-
-- hosts: servers
-  user: cumulus
-  become: yes
-  roles: 
     - common
