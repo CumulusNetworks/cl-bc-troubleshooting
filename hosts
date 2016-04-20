@@ -23,7 +23,7 @@ edge01
 [internet]
 internet
 
-[network]
+[network:children]
 leaf
 spine
 servers
