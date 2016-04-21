@@ -64,7 +64,7 @@
 
 - name: Delete the default if the eth0 default is still there
   shell: "ip route del default"
-  when: "'default via 192.168.0.254 dev eth0' in default_installed"     
+  when: "'default via 192.168.0.254' in default_installed.stdout"     
      
 - name: Add Default route if on server01
   lineinfile: dest=/etc/rc.local line="ip route add default nexthop via 172.16.1.1 dev eth1 onlink nexthop via 172.16.1.1 dev eth2 onlink" insertbefore="exit 0"
