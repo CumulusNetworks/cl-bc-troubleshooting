@@ -1,7 +1,7 @@
 
 auto lo
 iface lo inet loopback
-    address fd00::11/128
+    address 10.0.0.11/32
 
 auto eth0
 iface eth0 inet dhcp
@@ -10,12 +10,9 @@ iface eth0 inet dhcp
 # uplinks
 auto swp51
 iface swp51
-    address fd00::11/128
 
 auto swp52
 iface swp52
-    address fd00::11/128
-
 
 # bridge to hosts
 auto swp1
@@ -23,5 +20,5 @@ iface swp1
 
 auto br0
 iface br0
-     bridge-ports swp1
-     address fd16::1:1/112
+     bridge-ports swp1 swp2
+     address 172.16.1.1/24
