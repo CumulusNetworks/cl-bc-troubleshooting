@@ -4,12 +4,6 @@
   become: yes
   roles:
     - localhost
-
-- hosts: internet
-  user: cumulus
-  become: yes
-  roles:
-    - common
     
 - hosts: edge
   user: cumulus
