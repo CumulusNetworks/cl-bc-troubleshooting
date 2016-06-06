@@ -57,7 +57,7 @@
   when: ansible_lsb.major_release == "3"
 
 - name: Setup (2/3) vrf on eth0 when running CL 3.0
-  lineinfile: dest=/etc/network/interfaces insertafter="^iface eth0 inet dhcp " line="vrf mgmt"
+  lineinfile: dest=/etc/network/interfaces insertafter="^iface eth0 inet dhcp" line="vrf mgmt"
   when: ansible_lsb.major_release == "3"
 
 - name: Reboot (3/3) 3.0 servers for vrf
