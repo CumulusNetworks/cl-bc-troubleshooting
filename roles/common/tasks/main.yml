@@ -46,16 +46,16 @@
   
 - name: Install mgmtvrf
   apt: name=cl-mgmtvrf update_cache=yes state=present cache_valid_time=86400
-  when: "'cl-mgmtvrf' not in mgmtvrf_installed and 'Cumulus' in ansible_lsb.id" 
+  when: "'cl-mgmtvrf' not in mgmtvrf_installed and 'Cumulus' in ansible_lsb.id and '2.5' in ansible_lsb.release" 
       
 - name: Check if mgmtvrf is installed
   stat: path=/var/lib/cl-mgmtvrf/mgmtvrf.conf
   register: mgmtvrf
-  when: '"Cumulus" in ansible_lsb.id'  
+  when: '"Cumulus" in ansible_lsb.id and "2.5" in ansible_lsb.release'  
 
 - name: Setup Mgmtvrf
   command: cl-mgmtvrf -e
-  when: '"Cumulus" in ansible_lsb.id and mgmtvrf.stat.exists == False' 
+  when: 'mgmtvrf is defined and mgmtvrf.stat.exists == False' 
 
 - name: Check if default for eth1/eth2 is installed
   shell: "ip route show"
