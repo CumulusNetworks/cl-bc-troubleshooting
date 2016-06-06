@@ -16,11 +16,11 @@
 
 - name: reload networking
   command: ifreload -a
-  when: '"Cumulus" in ansible_lsb.id'
+  when: '"Cumulus" in ansible_lsb.id and ansible_lsb.major_release != "3"'
 
 - name: reload quagga
   service: name=quagga state=restarted
-  when: '"Cumulus" in ansible_lsb.id'
+  when: '"Cumulus" in ansible_lsb.id and ansible_lsb.major_release != "3"'
 
 - name: restarts servers with their new configuration
   shell: reboot
