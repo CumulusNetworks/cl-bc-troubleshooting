@@ -30,7 +30,7 @@
   shell: "dpkg-query -f '${binary:Package}\n' -W"
   register: mgmtvrf_installed
   notify: Install mgmtvrf
-  when: '"Cumulus" in ansible_lsb.id'  
+  when: '"Cumulus" in ansible_lsb.id and "2.5" in ansible_lsb.release'  
   
 - name: Install mgmtvrf
   apt: name=cl-mgmtvrf update_cache=yes state=present cache_valid_time=86400
@@ -55,15 +55,21 @@
       vrf-table auto
     insertbefore: BOF
   when: 'ansible_lsb.major_release == "3" and "Cumulus" in ansible_lsb.id'
-
+  tags:
+    - vrf3
+    
 - name: Setup (2/3) vrf on eth0 when running CL 3.0
   lineinfile: dest=/etc/network/interfaces insertafter="^iface eth0 inet dhcp" line="vrf mgmt"
   when: 'ansible_lsb.major_release == "3" and "Cumulus" in ansible_lsb.id'
-
+  tags:
+    - vrf3
+    
 - name: Reboot (3/3) 3.0 servers for vrf
   shell: reboot
   when: 'ansible_lsb.major_release == "3" and "Cumulus" in ansible_lsb.id'
-
+  tags:
+    - vrf3
+    
 - name: Wait for servers to come back up
   local_action: wait_for port=22 host="{{ inventory_hostname }}" search_regex=OpenSSH delay=10
 
