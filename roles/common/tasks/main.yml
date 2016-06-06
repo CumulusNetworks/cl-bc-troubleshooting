@@ -65,12 +65,12 @@
     - vrf3
     
 - name: Reboot (3/3) 3.0 servers for vrf
-  shell: reboot
+  shell: "sudo shutdown -r 0"
   when: 'ansible_lsb.major_release == "3" and "Cumulus" in ansible_lsb.id'
   tags:
     - vrf3
     
-- name: Wait for servers to come back up
+- name: Wait for everything to come back up
   local_action: wait_for port=22 host="{{ inventory_hostname }}" search_regex=OpenSSH delay=10
 
 - name: Check if default for eth1/eth2 is installed
