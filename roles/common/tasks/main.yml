@@ -45,7 +45,9 @@
   command: cl-mgmtvrf -e
   when: 'mgmtvrf is defined and mgmtvrf.stat.exists == False' 
 
-- local_action: wait_for port=22 host="{{ inventory_hostname }}" search_regex=OpenSSH delay=10
+- name: Wait for servers to come back up
+  local_action: wait_for port=22 host="{{ inventory_hostname }}" search_regex=OpenSSH delay=10
+  when: "'server' in ansible_hostname"
 
 - name: Check if default for eth1/eth2 is installed
   shell: "ip route show"
