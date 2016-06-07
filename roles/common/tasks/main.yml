@@ -65,7 +65,7 @@
     - vrf3
     
 - name: Reboot (3/3) 3.0 servers for vrf
-  shell: "sudo shutdown -r 0"
+  shell: "shutdown -r 0"
   when: 'ansible_lsb.major_release == "3" and "Cumulus" in ansible_lsb.id'
   tags:
     - vrf3
