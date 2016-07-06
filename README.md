@@ -34,7 +34,7 @@ This Boot Camp module requires Ansible to properly work.  Here are the steps to 
 Refer to the documentation in the Cumulus Networks Open Networking Boot Camp to solve network operations troubleshooting scenarios.  To run a working scenario with BGP unnumbered do the following
 
 ```bash
-cumulus@oob-mgmt-server:/home/vagrant$ ansible-playbook playbook -e "s=0"
+cumulus@oob-mgmt-server:/home/vagrant$ ansible-playbook playbook.yml -e "s=0"
 ```
 
 ##Course Information
