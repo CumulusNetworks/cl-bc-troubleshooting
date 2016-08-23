@@ -110,7 +110,11 @@
     - "iptables -t nat -A POSTROUTING -o swp48 -j MASQUERADE"
   when: "'internet' in ansible_hostname"
 
-- name: Add Default route if on server01
+- name: make sure default is present on internet simulation
+  command: ip route add default via 10.3.4.1
+  when: "'internet' in ansible_hostname and 'default via 10.3.4.1 dev swp48' not in default_installed.stdout"
+  
+- name: Add persistent route for internet simulation
   lineinfile: dest=/etc/rc.local line="ip route add default via 10.3.4.1" insertbefore="exit 0"
   when: "'internet' in ansible_hostname and 'default via 10.3.4.1 dev swp48' not in default_installed.stdout"
   
