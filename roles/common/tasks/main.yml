@@ -111,12 +111,12 @@
   when: "'internet' in ansible_hostname"
 
 - name: make sure default is present on internet simulation
-  command: ip route add default via 10.3.4.1
-  when: "'internet' in ansible_hostname and 'default via 10.3.4.1 dev swp48' not in default_installed.stdout"
+  command: ip route add default via {{ansible_dns.nameservers[0]}}
+  when: "'internet' in ansible_hostname and 'default via {{ansible_dns.nameservers[0]}} dev swp48' not in default_installed.stdout"
   
 - name: Add persistent route for internet simulation
-  lineinfile: dest=/etc/rc.local line="ip route add default via 10.3.4.1" insertbefore="exit 0"
-  when: "'internet' in ansible_hostname and 'default via 10.3.4.1 dev swp48' not in default_installed.stdout"
+  lineinfile: dest=/etc/rc.local line="ip route add default via {{ansible_dns.nameservers[0]}}" insertbefore="exit 0"
+  when: "'internet' in ansible_hostname and 'default via {{ansible_dns.nameservers[0]}} dev swp48' not in default_installed.stdout"
   
   
   
