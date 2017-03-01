@@ -29,4 +29,3 @@ iface eth2.5 inet6 manual
 
 auto eth2.6
 iface eth2.6 inet6 manual
-
