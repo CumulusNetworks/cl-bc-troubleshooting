@@ -13,7 +13,7 @@
   with_items:
     - vlan
   when: "'vlan' not in vlan_installed"
-  
+
 - name: Add 8021q module to running kernel config
   command: "{{ item }}"
   with_items:
@@ -26,13 +26,13 @@
 
 - name: Enable IPv6 Routing on the FWs
   sysctl: name="net.ipv6.conf.all.forwarding" value=1 sysctl_set=yes state=present reload=yes
-  ignore_errors: yes 
-       
+  ignore_errors: yes
+
 - name: Enable Routing for IPv4
   sysctl: name="net.ipv4.ip_forward" value=1 sysctl_set=yes state=present reload=yes
   tags:
     - quagga
-    
+
 - name: Check if iproute is installed
   shell: "dpkg-query -f '${binary:Package}\n' -W"
   register: iproute_installed
@@ -40,7 +40,7 @@
 - name: Install iproute for Quagga dependency
   apt: name=iproute update_cache=yes state=present cache_valid_time=86400
   when: "'iproute' not in iproute_installed"
-  
+
 - name: download official quagga deb
   get_url: url=https://github.com/CumulusNetworks/quagga/blob/cm_2.5/debian/release/quagga_0.99.23.1-1+cl2.5_amd64.deb?raw=true dest=/var/www/quagga_2.5.6.deb validate_certs=False
   delegate_to: 127.0.0.1
@@ -53,73 +53,50 @@
 
 #- name: print ansible_lsb.id result
 #  debug: var=ansible_lsb.id
-  
+
 - name: copy interfaces
   copy: src=scenario{{s}}/{{ansible_hostname}}/interfaces dest=/etc/network/
-  
+
 - name: copy Quagga daemons
   copy: src=scenario{{s}}/{{ansible_hostname}}/daemons dest=/etc/quagga/
-  
+
 - name: copy Quagga conf
   copy: src=scenario{{s}}/{{ansible_hostname}}/Quagga.conf dest=/etc/quagga/
 
 - name: reload quagga
   service: name=quagga state=restarted
 
-- name: Force Interfaces Down
-  command: ifdown {{item}}
-  with_items:
-    - lo
-    - eth1
-    - eth2
-    - eth1.2
-    - eth2.2
-    - eth1.3
-    - eth2.3
-    - eth1.4
-    - eth2.4
-    - eth1.5
-    - eth2.5
-    - eth1.6
-    - eth2.6
-    
-- name: Force Interfaces Up
-  command: ifup {{item}}
-  with_items:
-    - lo
-    - eth1
-    - eth2
-    - eth1.2
-    - eth2.2
-    - eth1.3
-    - eth2.3
-    - eth1.4
-    - eth2.4
-    - eth1.5
-    - eth2.5
-    - eth1.6
-    - eth2.6
-      
+- name: Reboot edge
+  shell: sleep 1 && shutdown -r 0
+  async: 1
+  poll: 0
+  ignore_errors: true
+  tags:
+    - vrf3
+
+- name: Wait for everything to come back up
+  local_action: wait_for port=22 host="{{ inventory_hostname }}" search_regex=OpenSSH delay=10
+
 - name: Check if default for eth0 is installed
   shell: "ip route show"
   register: default_installed
   tags:
     - remove_default
-     
+
 - name: delete default if everything else worked and we are running vagrant
   command: ip route del default via 192.168.0.254
   when: default_installed is defined and "default via 192.168.0.254 dev eth0" in default_installed.stdout
   tags:
     - remove_default
- 
+
 - name: Check if default for vagrant is installed
   shell: "ip route show"
   register: default_installed
   tags:
     - remove_default
-      
+
 - name: delete default if everything else worked and we are running vagrant
   command: ip route del default via 10.0.2.2
-  when: default_installed is defined and "default via 10.0.2.2 dev vagrant" in default_installed.stdout  
+  when: default_installed is defined and "default via 10.0.2.2 dev vagrant" in default_installed.stdout
   tags:
     - remove_default
