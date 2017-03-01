@@ -43,7 +43,7 @@ This course is used as part of the Cumulus Linux Open Networking Boot Camp.  Ple
 
 ---
 
-![Cumulus icon](http://cumulusnetworks.com/static/cumulus/img/logo_2014.png)  
+![Cumulus icon](cumulus-small.png)  
 
 ### Cumulus Linux
 
