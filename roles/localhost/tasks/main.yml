@@ -1,5 +1,5 @@
 - name: Make sure internet is in /etc/hosts
-  lineinfile: dest=/etc/hosts line="192.168.0.253 internet.lab.local internet"  insertafter=EOF
+  lineinfile: dest=/etc/hosts line="192.168.0.100 internet.lab.local internet"  insertafter=EOF
 
 - name: Do not allow dhcp to send out a default route for anyone
   lineinfile: dest=/etc/dhcp/dhcpd.pools line="#option routers 192.168.0.254;" regexp="^option routers"
